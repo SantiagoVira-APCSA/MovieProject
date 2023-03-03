@@ -1,3 +1,5 @@
+// https://github.com/SantiagoVira/MovieProject
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -6,7 +8,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.List;
 
 public class MovieCollection {
   private ArrayList<Movie> movies;
@@ -74,6 +75,7 @@ public class MovieCollection {
       System.out.println("- see all movies of a (gen)re");
       System.out.println("- list top 50 (r)ated movies");
       System.out.println("- list top 50 (h)igest revenue movies");
+      System.out.println("- find Kevin Bacon (kb)");
       System.out.println("- (q)uit");
       System.out.print("Enter choice: ");
       menuOption = scanner.nextLine();
@@ -99,6 +101,8 @@ public class MovieCollection {
       listHighestRated();
     } else if (option.equals("h")) {
       listHighestRevenue();
+    } else if (option.equals("kb")) {
+      getKevinBacon();
     } else {
       System.out.println("Invalid choice!");
     }
@@ -326,7 +330,7 @@ public class MovieCollection {
   }
 
   private void listHighestRated() {
-     ArrayList<Movie> listToSort = new ArrayList<Movie>(movies);
+    ArrayList<Movie> listToSort = new ArrayList<Movie>(movies);
     for (int j = 1; j < listToSort.size(); j++) {
       Movie temp = listToSort.get(j);
       double tempRev = temp.getUserRating();
@@ -385,6 +389,80 @@ public class MovieCollection {
 
     System.out.println("\n ** Press Enter to Return to Main Menu **");
     scanner.nextLine();
+  }
+
+  private void getKevinBacon() {
+
+    System.out.print("Who do you want to search for? ");
+    String searchTerm = scanner.nextLine();
+
+    // prevent case sensitivity
+    searchTerm = searchTerm.toLowerCase();
+
+    ArrayList<String> matchesSearch = new ArrayList<String>();
+    ArrayList<String> sortedCast = new ArrayList<String>(castList.keySet());
+    Collections.sort(sortedCast);
+    int castIdx = 1;
+    for (String name : sortedCast) {
+      if (name.toLowerCase().contains(searchTerm)) {
+        System.out.println(castIdx + ". " + name);
+        matchesSearch.add(name);
+        castIdx++;
+      }
+    }
+
+    if (matchesSearch.size() > 0) {
+      int choice;
+      do {
+        System.out.print("What is your choice? ");
+        choice = scanner.nextInt();
+      } while (choice < 1 || choice > matchesSearch.size());
+
+      String actor = matchesSearch.get(choice - 1);
+      ArrayList<String> kb = findKevinBacon(actor, new ArrayList<String>(Arrays.asList(actor)), 2);
+      System.out.println(kb);
+
+    }
+  }
+
+  private ArrayList<String> findKevinBacon(String name, ArrayList<String> path, int maxDepth) {
+    if (path.size() == maxDepth) {
+      return path;
+    }
+    ArrayList<Movie> movies = new ArrayList<Movie>(castList.get(name));
+    ArrayList<String> fullCast = new ArrayList<String>();
+    for (Movie m : movies) {
+      String[] badcast = m.getCast().split("\\|");
+      ArrayList<String> cast = new ArrayList<String>(Arrays.asList(badcast));
+      if (cast.contains("Kevin Bacon")) {
+        System.out.println("We found him quick!!");
+        ArrayList<String> newPath = new ArrayList<String>(path);
+        newPath.add("Kevin Bacon");
+        return newPath;
+      }
+      for (String actor : cast) {
+        if (actor.equals("Kevin Bacon")) {
+          System.out.println("We found him!!");
+          ArrayList<String> newPath = new ArrayList<String>(path);
+          newPath.add(actor);
+          return newPath;
+        }
+        if (!fullCast.contains(actor) && !path.contains(actor)) {
+          fullCast.add(actor);
+          ArrayList<String> newPath = new ArrayList<String>(path);
+          newPath.add(actor);
+          ArrayList<String> finalPath = findKevinBacon(actor, newPath, maxDepth);
+          if (finalPath.size() > 0 && finalPath.get(finalPath.size() - 1).equals("Kevin Bacon")) {
+            return finalPath;
+          }
+        }
+      }
+    }
+    if (maxDepth != 6) {
+      maxDepth++;
+      return findKevinBacon(name, path, maxDepth);
+    }
+    return new ArrayList<String>();
   }
 
   private void importMovieList(String fileName) {

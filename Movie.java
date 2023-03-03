@@ -1,8 +1,9 @@
+// https://github.com/SantiagoVira/MovieProject
+
 /**
  * Class that represents a single Movie object
  */
-public class Movie 
-{
+public class Movie {
   private String title;
   private String cast;
   private String director;
@@ -14,11 +15,10 @@ public class Movie
   private double userRating;
   private int year;
   private int revenue;
-  
+
   public Movie(String title, String cast, String director, String tagline,
-                String keywords, String overview, int runtime, String genres,
-                double userRating, int year, int revenue)
-  {
+      String keywords, String overview, int runtime, String genres,
+      double userRating, int year, int revenue) {
     this.title = title;
     this.cast = cast;
     this.director = director;
@@ -31,64 +31,52 @@ public class Movie
     this.year = year;
     this.revenue = revenue;
   }
-    
-  public String getTitle()
-  {
+
+  public String getTitle() {
     return title;
   }
-  
-  public String getCast()
-  {
+
+  public String getCast() {
     return cast;
   }
-  
-  public String getDirector()
-  {
+
+  public String getDirector() {
     return director;
   }
-  
-  public String getTagline()
-  {
+
+  public String getTagline() {
     return tagline;
   }
-  
-  public String getKeywords()
-  {
+
+  public String getKeywords() {
     return keywords;
   }
 
-  public String getOverview()
-  {
+  public String getOverview() {
     return overview;
   }
 
-  public int getRuntime()
-  {
+  public int getRuntime() {
     return runtime;
   }
 
-  public String getGenres()
-  {
+  public String getGenres() {
     return genres;
   }
 
-  public double getUserRating()
-  {
+  public double getUserRating() {
     return userRating;
   }
-  
-  public int getYear()
-  {
+
+  public int getYear() {
     return year;
   }
 
-  public int getRevenue()
-  {
+  public int getRevenue() {
     return revenue;
   }
-      
-  public String toString()
-  {
-    return "Title: " + title + ", Tagline: " + tagline; 
+
+  public String toString() {
+    return "Title: " + title + ", Tagline: " + tagline;
   }
 }

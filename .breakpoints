@@ -1,3 +1,18 @@
 {
-  "files": {}
+  "files": {
+    "MovieCollection.java": [
+      {
+        "id": "0fe1500c-b5e9-418f-b43e-15c3e1bc63ea",
+        "line": 424,
+        "version": 4311,
+        "index": 13145
+      },
+      {
+        "id": "22ccb0f4-4f46-4e61-b7ca-f2a500867d7d",
+        "line": 455,
+        "version": 4382,
+        "index": 14392
+      }
+    ]
+  }
 }
